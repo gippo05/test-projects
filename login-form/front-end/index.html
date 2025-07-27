@@ -3,22 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./indexstyles.css">
+    <title>GIPPSBOOK</title>
 </head>
 <body>
-    <h1>WELCOME TO GIPPSBOOK!</h1>
 
-    <form action="/login" method="POST">
-        <label for="email">Email:</label>
-        <input type="text" name="email" placeholder="Enter your username">
-        <label for="password">Password:</label>
-        <input type="password" name="password" placeholder="Enter your password">
-        <input type="submit">
-    </form>
+    <div class="parent-div">
+        
+                <h1>WELCOME TO GIPPSBOOK!</h1>
 
-    <form action="/register">
-        <h4>New User?</h4>
-        <input type="submit" name="register" value="Register">
-    </form>
+        <div class="child-div">
+            <form action="/login" method="POST">
+                <label for="email">Email:</label>
+                <input type="text" name="email" placeholder="Enter your username">
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="Enter your password">
+                <input type="submit">
+            </form>
+
+            <form action="/register">
+                <h4>Don't have an account yet?</h4>
+                <input type="submit" name="register" value="Register">
+            </form>
+        </div>
+    </div>
+
+
 </body>
 </html>
