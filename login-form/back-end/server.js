@@ -61,7 +61,7 @@ app.post("/login", async (req, res) => {
         }
     }
     else{
-        res.redirect("/")
+        return res.send("User not found!")
     }
 });
 
