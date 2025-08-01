@@ -1,31 +1,48 @@
-import express from 'express';
+import express from "express";
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+app.use(express.static('public'));
 
+let contentStorage = [];
 
-
-app.get("/", (req, res)=>{
-    res.render("index.ejs")
+app.get("/", (req, res) => {
+  const blogTitles = contentStorage.map(({ id, title }) => ({ id, title }));
+  res.render("index.ejs", { blogPost: blogTitles });
 });
 
+app.get("/blog/:id", (req, res) => {
+  const { id } = req.params;
+  const content = contentStorage.find((post) => post.id === parseInt(id));
 
-let contentDB = [];
+  if (!content) {
+    return res.status(404).send("Blog post not found");
+  }
 
-app.post("/submit", (req, res)=>{ //this submits and save the post to the mock data base.
-   const { title, blogContent} = req.body;
-
-   if(!title || !blogContent){
-    res.status(401).json({message: "Please enter required fields!"});
-   }
-
-   contentDB.push({title, blogContent});
+  res.render("blog.ejs", { content: content });
 });
 
+let lastId = 0;
 
-app.listen(port, ()=>{
-    console.log(`Server running on port ${port}`);
+app.post("/submit", (req, res) => {
+  const { title, blogContent } = req.body;
+
+  if (!title || !blogContent) {
+    return res.status(400).send("Please complete required fields!");
+  }
+
+  lastId++;
+  let newPost = { id: lastId, title, blogContent };
+  contentStorage.push(newPost);
+
+  
+  return res.redirect("/");
+});
+
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
